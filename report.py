@@ -9,7 +9,6 @@ def report(token, yaml_path):
     f.write("# Reports  \n")
     f.write("last update " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
     f.write("## Issues/Pull Requests  \n")
-    f.write("### ROS2 packages  \n")
     f.write(pd.DataFrame(get_ros_package_issues(token, yaml_path), columns=['package','issue']).to_markdown())
     f.close()
 
