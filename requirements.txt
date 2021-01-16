@@ -4,7 +4,6 @@ GitPython
 pandas
 tabulate
 datetime
-PyGithub
 
 # requirements for mkdocs
 mkdocs
