@@ -24,16 +24,17 @@ def check_ros_packages(token, yaml_path):
                     support_platforms = config["ros"][user][package]["rosdistro"]
                 for platfrom in support_platforms:
                     if str("workflow/" + platfrom) not in repo.get_branches():
-                        check_ci_template(package, platfrom, repo)
+                        check_ci_template(package, platfrom, user, repo, token)
 
-def check_ci_template(package, rosdistro, repo):
+def check_ci_template(package, rosdistro, user, repo, token):
     repo_path = os.path.join('./', 'ros_packages/' + package)
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
-    git_repo = git.Repo.clone_from(repo.clone_url, repo_path, branch=repo.default_branch)
+    clone_url = "https://" + user + ":" + token + "@github.com/" + user + "/" + package
+    git_repo = git.Repo.clone_from(clone_url, repo_path, branch=repo.default_branch)
     branch = "workflow/" + rosdistro
-    git_repo.repo.config_writer().set_value("user", "name", "masaya kataoka").release()
-    git_repo.repo.config_writer().set_value("user", "email", "ms.kataoka@gmail.com").release()
+    git_repo.config_writer().set_value("user", "name", "robotx_buildfarm").release()
+    git_repo.config_writer().set_value("user", "email", repo.organization.email).release()
     git_repo.git.branch(branch)
     git_repo.git.checkout(branch)
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
