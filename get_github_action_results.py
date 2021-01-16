@@ -2,7 +2,7 @@ import argparse
 from github import Github
 import yaml
 
-def get_issues(token, yaml_path):
+def get_ros_package_issues(token, yaml_path):
     g = Github(token)
     data = []
     with open(yaml_path) as file:
@@ -30,9 +30,4 @@ def get_issues(token, yaml_path):
     return data
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='scripts for getting issues')
-    parser.add_argument('token', help='token of the github')
-    parser.add_argument('yaml_path', help='path to the packages.yaml file')
-    args = parser.parse_args()
-    data = get_issues(args.token, args.yaml_path)
-    print(data)
+    pass
