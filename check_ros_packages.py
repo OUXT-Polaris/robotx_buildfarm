@@ -22,17 +22,22 @@ def check_ros_packages(token, yaml_path):
                     support_platforms = list(workflow_dict.keys())
                 else:
                     support_platforms = config["ros"][user][package]["rosdistro"]
+                branches = []
+                for branch in repo.get_branches():
+                    branches.append(branch.name)
                 for platfrom in support_platforms:
-                    if str("workflow/" + platfrom) not in repo.get_branches():
-                        check_ci_template(package, platfrom, user, repo, token)
+                    commit_target = "workflow/" + platfrom
+                    if commit_target not in branches:
+                        check_ci_template(package, platfrom, user, repo, token, commit_target)
+                    else:
+                        print("pass sending pull request")
 
-def check_ci_template(package, rosdistro, user, repo, token):
+def check_ci_template(package, rosdistro, user, repo, token, branch):
     repo_path = os.path.join('./', 'ros_packages/' + package)
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
     clone_url = "https://" + user + ":" + token + "@github.com/" + user + "/" + package
     git_repo = git.Repo.clone_from(clone_url, repo_path, branch=repo.default_branch)
-    branch = "workflow/" + rosdistro
     git_repo.config_writer().set_value("user", "name", "robotx_buildfarm").release()
     git_repo.config_writer().set_value("user", "email", repo.organization.email).release()
     git_repo.git.branch(branch)

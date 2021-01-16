@@ -1,5 +1,6 @@
 from get_issues import get_issues
 from get_github_action_results import get_ros_ci_results
+from check_ros_packages import check_ros_packages
 import os
 import pandas as pd
 import argparse
@@ -8,6 +9,7 @@ from pytz import timezone, utc
 from tzlocal import get_localzone
 
 def report(token, yaml_path):
+    check_ros_packages(token, yaml_path)
     f = open('docs/report.md', 'w')
     f.write("# Reports  \n")
     ja = timezone('Asia/Tokyo')
