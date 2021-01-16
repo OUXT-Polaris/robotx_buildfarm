@@ -18,7 +18,6 @@ def get_ros_ci_results(token, yaml_path):
                     support_platforms = list(workflow_dict.keys())
                 else:
                     support_platforms = config["ros"][user][package]["rosdistro"]
-                print(support_platforms)
                 print("scanning -> " + url)
                 repo = g.get_repo(user + "/" + package)
                 package_status = [package]
