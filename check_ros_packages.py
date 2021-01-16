@@ -13,7 +13,8 @@ def check_ros_packages(token, yaml_path):
         for user in config["ros"]:
             for package in config["ros"][user]:
                 repo_path = os.path.join('./', 'ros_packages/' + package)
-                shutil.rmtree(repo_path)
+                if os.path.exists(repo_path):
+                    shutil.rmtree(repo_path)
                 url = "https://github.com/" + user + "/" + package + ".git"
                 print("scanning -> " + url)
                 repo = g.get_repo(user + "/" + package)
@@ -26,7 +27,8 @@ def check_ros_packages(token, yaml_path):
                 else:
                     support_platforms = config["ros"][user][package]["rosdistro"]
                 for platfrom in support_platforms:
-                    check_ci_template(package, repo, repo_path, platfrom)
+                    if str("workflow/" + platfrom) not in repo.get_branches():
+                        check_ci_template(package, repo, repo_path, platfrom)
 
 def check_ci_template(package, repo, repo_path, rosdistro):
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
@@ -36,7 +38,8 @@ def check_ci_template(package, repo, repo_path, rosdistro):
         f = open("./ci_templates/" + workflow_dict[rosdistro], 'r')
         workflow_string = f.read()
         f.close()
-        workflow_string = data.replace("${package_name}", package)
+        workflow_string = workflow_string.replace("${package_name}", package)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
