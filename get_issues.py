@@ -1,7 +1,6 @@
 import argparse
 from github import Github
 import yaml
-import markdown
 
 def get_ros_package_issues(token, yaml_path):
     g = Github(token)
