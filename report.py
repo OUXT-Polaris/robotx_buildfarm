@@ -6,7 +6,7 @@ import datetime
 
 def report(token, yaml_path):
     f = open('docs/report.md', 'w')
-    f.write("# Reports " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
+    f.write("# Reports Generated " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
     f.write("## Issues  \n")
     f.write("### ROS2 packages  \n")
     f.write(pd.DataFrame(get_ros_package_issues(token, yaml_path), columns=['package','issue']).to_markdown())

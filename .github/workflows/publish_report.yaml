@@ -22,6 +22,8 @@ jobs:
         run: pip3 install -r requirements.txt
       - name: Generate Report
         run: python3 report.py ${{ secrets.TOKEN }} packages.yaml
+      - name: Generate Website from Report
+        run: mkdocs build
       - name: Publish Report
         uses: peaceiris/actions-gh-pages@v3
         with:
