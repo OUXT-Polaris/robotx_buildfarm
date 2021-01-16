@@ -2,31 +2,42 @@ import argparse
 from github import Github
 import yaml
 
-def get_ros_ci_results(token, yaml_path, distribution):
+def get_ros_ci_results(token, yaml_path):
     g = Github(token)
     data = []
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
-    if distribution not in workflow_dict:
-        raise Exception("distribution " + distribution + " does not exist")
     with open(yaml_path) as file:
         config = yaml.safe_load(file)
         for user in config["ros"]:
             for package in config["ros"][user]:
                 url = "https://github.com/" + user + "/" + package + ".git"
+                support_platforms = []
+                if config["ros"][user][package] is None:
+                    support_platforms = list(workflow_dict.keys())
+                elif "rosdistro" not in config["ros"][user][package]:
+                    support_platforms = list(workflow_dict.keys())
+                else:
+                    support_platforms = config["ros"][user][package]["rosdistro"]
+                print(support_platforms)
                 print("scanning -> " + url)
                 repo = g.get_repo(user + "/" + package)
-                try:
-                    workflow = repo.get_workflow(workflow_dict[distribution])
-                    data.append([package, str("![" + package + "](" + workflow.badge_url + ")")])
-                except:
-                    data.append([package, "NO " + distribution + " support"])
+                package_status = [package]
+                for rosdistro in workflow_dict:
+                    if rosdistro in support_platforms:
+                        try:
+                            workflow = repo.get_workflow(workflow_dict[rosdistro])
+                            package_status.append(str("![" + package + "](" + workflow.badge_url + ")"))
+                        except:
+                            package_status.append("<span style=\"color: red; \">No Test for " + rosdistro + ".</span>")
+                    else:
+                        package_status.append("No " + rosdistro + " support.")
+                data.append(package_status)
     return data
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
     parser.add_argument('token', help='token of the github')
     parser.add_argument('yaml_path', help='path to the packages.yaml file')
-    parser.add_argument('distribution', help='ROS2 distribution')
     args = parser.parse_args()
-    data = get_ros_ci_results(args.token, args.yaml_path, args.distribution)
+    data = get_ros_ci_results(args.token, args.yaml_path)
     print(data)

@@ -1,23 +1,23 @@
 ros:
   OUXT-Polaris:
     pcl_apps:
-      distro:
+      rosdistro:
         - foxy
     image_processing_utils:
     scan_segmentation:
-      distro:
+      rosdistro:
         - foxy
     perception_bringup:
-      distro:
+      rosdistro:
         - foxy
     hermite_path_planner:
-      distro:
+      rosdistro:
         - foxy
     behavior_tree_action_builder:
-      distro:
+      rosdistro:
         - foxy
     robotx_behavior_tree:
-      distro:
+      rosdistro:
         - foxy
     color_names:
     quaternion_operation:
@@ -26,19 +26,20 @@ ros:
     wamv_description:
     geographic_info:
     geographic_conversion:
-      distro:
+      rosdistro:
         - foxy
     nmea_to_geopose:
-      distro:
+      rosdistro:
         - foxy
+      documentation:
     pf_localization:
-      distro:
+      rosdistro:
         - foxy
     odom_frame_publisher:
-      distro:
+      rosdistro:
         - foxy
     nmea_gps_driver:
-      distro:
+      rosdistro:
         - foxy
 others:
   OUXT-Polaris:

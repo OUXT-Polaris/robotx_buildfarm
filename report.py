@@ -15,7 +15,7 @@ def report(token, yaml_path):
     f.write("last update " + str(time) + "  \n")
     f.write("## Support Status  \n")
     f.write("### Foxy  \n")
-    f.write(pd.DataFrame(get_ros_ci_results(token, yaml_path, "foxy"), columns=['package','badge']).to_markdown(index = False))
+    f.write(pd.DataFrame(get_ros_ci_results(token, yaml_path), columns=['package', 'foxy', 'dashing']).to_markdown(index = False))
     f.write("  \n   \n")
     f.write("## Issues/Pull Requests  \n")
     f.write(pd.DataFrame(get_issues(token, yaml_path), columns=['package','issue']).to_markdown(index = False))
