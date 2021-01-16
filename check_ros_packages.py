@@ -32,6 +32,8 @@ def check_ci_template(package, rosdistro, repo):
         shutil.rmtree(repo_path)
     git_repo = git.Repo.clone_from(repo.clone_url, repo_path, branch=repo.default_branch)
     branch = "workflow/" + rosdistro
+    git_repo.repo.config_writer().set_value("user", "name", "masaya kataoka").release()
+    git_repo.repo.config_writer().set_value("user", "email", "ms.kataoka@gmail.com").release()
     git_repo.git.branch(branch)
     git_repo.git.checkout(branch)
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
