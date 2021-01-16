@@ -19,6 +19,6 @@ jobs:
         with:
           python-version: '3.8.5'
       - name: Install Depends
-        run: pip3 install requirements.txt
+        run: pip3 install -r requirements.txt
       - name: Generate Report
         run: python3 report.py ${{ secrets.TOKEN }} packages.yaml
