@@ -57,7 +57,9 @@ def check_ci_template(package, rosdistro, user, repo, token, branch):
             with open(repo_path + "/.github/workflows/" + workflow_dict[rosdistro], mode='r+') as f:
                 workflow_string = f.read()
                 if workflow_string != workflow_string_valid:
-                    f.write(workflow_string_valid)
+                    os.remove(repo_path + "/.github/workflows/" + workflow_dict[rosdistro])
+                    with open(repo_path + "/.github/workflows/" + workflow_dict[rosdistro], mode='w') as workflow_file:
+                        workflow_file.write(workflow_string_valid)
                     modified_files.append(repo_path + "/.github/workflows/" + workflow_dict[rosdistro])
         else:
             with open(repo_path + "/.github/workflows/" + workflow_dict[rosdistro], mode='w') as f:
