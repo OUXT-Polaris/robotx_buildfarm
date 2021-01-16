@@ -14,7 +14,6 @@ def report(token, yaml_path):
     time = datetime.datetime(2017, 11, 12, 9, 55, 28, tzinfo=ja)
     f.write("last update " + str(time) + "  \n")
     f.write("## Support Status  \n")
-    f.write("### Foxy  \n")
     f.write(pd.DataFrame(get_ros_ci_results(token, yaml_path), columns=['package', 'foxy', 'dashing']).to_markdown(index = False))
     f.write("  \n   \n")
     f.write("## Issues/Pull Requests  \n")
