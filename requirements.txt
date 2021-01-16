@@ -1,0 +1,5 @@
+argparse
+yaml
+GitPython
+pandas
+tabulate
