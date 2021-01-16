@@ -5,7 +5,7 @@ import argparse
 import datetime
 
 def report(token, yaml_path):
-    f = open('report.md', 'w')
+    f = open('docs/report.md', 'w')
     f.write("# Reports " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
     f.write("## Issues  \n")
     f.write("### ROS2 packages  \n")

@@ -10,7 +10,7 @@ on:
 jobs:
   publish-report:
     name: Publish Report
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout code
@@ -22,3 +22,8 @@ jobs:
         run: pip3 install -r requirements.txt
       - name: Generate Report
         run: python3 report.py ${{ secrets.TOKEN }} packages.yaml
+      - name: Publish Report
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/site
