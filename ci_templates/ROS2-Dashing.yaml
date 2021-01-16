@@ -1,7 +1,13 @@
 
 name: ROS2-dashing
 
-on: [push, pull_request]
+name: documentat
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  push:
+  workflow_dispatch:
 
 jobs:
     job1:

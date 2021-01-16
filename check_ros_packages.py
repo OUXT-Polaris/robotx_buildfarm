@@ -31,8 +31,9 @@ def check_ci_template(package, rosdistro, repo):
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
     git_repo = git.Repo.clone_from(repo.clone_url, repo_path, branch=repo.default_branch)
-    git_repo.git.branch("workflow/" + rosdistro)
-    git_repo.git.checkout("workflow/" + rosdistro)
+    branch = "workflow/" + rosdistro
+    git_repo.git.branch(branch)
+    git_repo.git.checkout(branch)
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
     if rosdistro not in workflow_dict:
         raise Exception("rosdistro key is invalid")
@@ -59,6 +60,7 @@ def check_ci_template(package, rosdistro, repo):
                 modified_file = modified_file.replace("./ros_packages/"+package+"/","")
                 git_repo.git.add(modified_file)
                 git_repo.git.commit(modified_file, message='update ' + modified_file)
+            git_repo.git.push('origin', branch)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
