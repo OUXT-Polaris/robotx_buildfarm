@@ -64,6 +64,7 @@ def check_ci_template(package, rosdistro, user, repo, token):
                 git_repo.git.add(modified_file)
                 git_repo.git.commit(modified_file, message='update ' + modified_file)
             git_repo.git.push('origin', branch)
+            repo.create_pull(title="update CI workflow for " + rosdistro, body="update CI workflow", head=branch, base=repo.default_branch)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
