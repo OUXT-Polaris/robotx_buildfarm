@@ -4,17 +4,22 @@ import os
 import pandas as pd
 import argparse
 import datetime
+from pytz import timezone, utc
+from tzlocal import get_localzone
 
 def report(token, yaml_path):
     f = open('docs/report.md', 'w')
     f.write("# Reports  \n")
-    f.write("last update " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
+    ja = timezone('Asia/Tokyo')
+    time = datetime.datetime(2017, 11, 12, 9, 55, 28, tzinfo=ja)
+    f.write("last update " + str(time) + "  \n")
     f.write("## Support Status  \n")
     f.write("### Foxy  \n")
     f.write(pd.DataFrame(get_ros_ci_results(token, yaml_path, "foxy"), columns=['package','badge']).to_markdown(index = False))
-    f.write("\n")
+    f.write("  \n   \n")
     f.write("## Issues/Pull Requests  \n")
     f.write(pd.DataFrame(get_issues(token, yaml_path), columns=['package','issue']).to_markdown(index = False))
+    f.write("  \n   \n")
     f.close()
 
 if __name__ == "__main__":

@@ -17,10 +17,9 @@ def get_ros_ci_results(token, yaml_path, distribution):
                 repo = g.get_repo(user + "/" + package)
                 try:
                     workflow = repo.get_workflow(workflow_dict[distribution])
-                    print("![" + package + "](" + workflow.badge_url + ")")
                     data.append([package, str("![" + package + "](" + workflow.badge_url + ")")])
                 except:
-                    pass
+                    data.append([package, "NO " + distribution + " support"])
     return data
 
 if __name__ == "__main__":

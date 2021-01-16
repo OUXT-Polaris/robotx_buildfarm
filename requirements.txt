@@ -4,6 +4,8 @@ GitPython
 pandas
 tabulate
 datetime
+pytz
+tzlocal
 
 # requirements for mkdocs
 mkdocs
