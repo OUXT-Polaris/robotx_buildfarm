@@ -4,3 +4,4 @@ GitPython
 pandas
 tabulate
 datetime
+PyGithub
