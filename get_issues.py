@@ -2,9 +2,8 @@ import argparse
 from github import Github
 import yaml
 import markdown
-#import pandas as pd
 
-def get_issue(token, yaml_path):
+def get_ros_package_issues(token, yaml_path):
     g = Github(token)
     data = []
     with open(yaml_path) as file:
@@ -20,13 +19,11 @@ def get_issue(token, yaml_path):
                     issue_string = "[" + issue.title + "](" + issue_url + ")"
                     data.append([package, issue_string])
     return data
-    #with open("issues.md", mode='w') as f:
-        #df = pd.DataFrame(data, columns=['package','issue'])
-        #f.write(df.to_markdown())
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='scripts for getting issues')
-    parser.add_argument('token', help='token of the github')
-    parser.add_argument('yaml_path', help='path to the packages.yaml file')
-    args = parser.parse_args()
-    get_issue(args.token, args.yaml_path)
+    pass
+    # parser = argparse.ArgumentParser(description='scripts for getting issues')
+    # parser.add_argument('token', help='token of the github')
+    # parser.add_argument('yaml_path', help='path to the packages.yaml file')
+    # args = parser.parse_args()
+    # get_issue(args.token, args.yaml_path)
