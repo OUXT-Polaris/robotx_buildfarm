@@ -9,7 +9,7 @@ def report(token, yaml_path):
     f.write("# Reports  \n")
     f.write("last update " + str(datetime.datetime(2017, 11, 12, 9, 55, 28)) + "  \n")
     f.write("## Issues/Pull Requests  \n")
-    f.write(pd.DataFrame(get_issues(token, yaml_path), columns=['package','issue']).to_markdown())
+    f.write(pd.DataFrame(get_issues(token, yaml_path), columns=['package','issue']).to_markdown(index = False))
     f.close()
 
 if __name__ == "__main__":
