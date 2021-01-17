@@ -20,6 +20,8 @@ ros:
       rosdistro:
         - foxy
     color_names:
+      rosdistro:
+        - foxy
     quaternion_operation:
     data_buffer:
     geometry_msgs_data_buffer:
@@ -50,7 +52,6 @@ ros:
     joy_to_twist:
       rosdistro:
         - foxy
-        - dashing
 others:
   OUXT-Polaris:
     robotx_setup:
