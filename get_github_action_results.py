@@ -24,7 +24,9 @@ def get_ros_ci_results(token, yaml_path):
                 for rosdistro in workflow_dict:
                     if rosdistro in support_platforms:
                         try:
+                            print(rosdistro)
                             workflow = repo.get_workflow(workflow_dict[rosdistro])
+                            print(workflow)
                             package_status.append(str("![" + package + "](" + workflow.badge_url + ")"))
                         except:
                             package_status.append("<span style=\"color: red; \">No Test for " + rosdistro + ".</span>")
