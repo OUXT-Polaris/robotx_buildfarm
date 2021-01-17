@@ -25,6 +25,8 @@ ros:
     quaternion_operation:
     data_buffer:
     geometry_msgs_data_buffer:
+      rosdistro:
+        - foxy
     wamv_description:
     geographic_info:
     geographic_conversion:
