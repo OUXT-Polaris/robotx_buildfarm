@@ -41,6 +41,16 @@ ros:
     nmea_gps_driver:
       rosdistro:
         - foxy
+    embree_vendor:
+      rosdistro:
+        - foxy
+    navi_sim:
+      rosdistro:
+        - foxy
+    joy_to_twist:
+      rosdistro:
+        - foxy
+        - dashing
 others:
   OUXT-Polaris:
     robotx_setup:
