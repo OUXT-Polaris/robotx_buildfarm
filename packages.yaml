@@ -23,6 +23,8 @@ ros:
       rosdistro:
         - foxy
     quaternion_operation:
+      rosdistro:
+        - foxy
     data_buffer:
     geometry_msgs_data_buffer:
       rosdistro:
