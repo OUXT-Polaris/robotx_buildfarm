@@ -6,6 +6,7 @@ tabulate
 datetime
 pytz
 tzlocal
+termcolor
 
 # requirements for mkdocs
 mkdocs

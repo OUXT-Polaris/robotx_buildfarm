@@ -4,16 +4,19 @@ import yaml
 import git
 import os
 import shutil
+from termcolor import colored
 
-def check_ros_packages(token, yaml_path):
+def check_ros_packages(token, yaml_path, send_pr):
+    print(colored('start checking ROS2 packages', 'green'))
     workflow_dict = {"foxy" : "ROS2-Foxy.yaml", "dashing" : "ROS2-Dashing.yaml"}
     g = Github(token)
     with open(yaml_path) as file:
         config = yaml.safe_load(file)
         for user in config["ros"]:
+            i = 0
             for package in config["ros"][user]:
                 url = "https://github.com/" + user + "/" + package + ".git"
-                print("scanning -> " + url)
+                print("scanning -> " + url + "(" + str(i) + "/" + str(len(config["ros"][user])) + ")")
                 support_platforms = []
                 repo = g.get_repo(user + "/" + package)
                 if config["ros"][user][package] is None:
@@ -28,11 +31,12 @@ def check_ros_packages(token, yaml_path):
                 for platfrom in support_platforms:
                     commit_target = "workflow/" + platfrom
                     if commit_target not in branches:
-                        check_ci_template(package, platfrom, user, repo, token, commit_target)
+                        check_ci_template(package, platfrom, user, repo, token, commit_target, send_pr)
                     else:
-                        print("pass sending pull request")
+                        print(colored('branch ' + commit_target +  ' already exists, pass cheking CI template', 'yellow'))
+                i = i + 1
 
-def check_ci_template(package, rosdistro, user, repo, token, branch):
+def check_ci_template(package, rosdistro, user, repo, token, branch, send_pr):
     repo_path = os.path.join('./', 'ros_packages/' + package)
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
@@ -70,12 +74,18 @@ def check_ci_template(package, rosdistro, user, repo, token, branch):
                 modified_file = modified_file.replace("./ros_packages/"+package+"/","")
                 git_repo.git.add(modified_file)
                 git_repo.git.commit(modified_file, message='update ' + modified_file)
-            git_repo.git.push('origin', branch)
-            repo.create_pull(title="update CI workflow for " + rosdistro, body="update CI workflow", head=branch, base=repo.default_branch)
+            if send_pr:
+                git_repo.git.push('origin', branch)
+                repo.create_pull(title="update CI workflow for " + rosdistro, body="update CI workflow", head=branch, base=repo.default_branch)
+            else:
+                print(colored(workflow_dict[rosdistro] + 'is defferent from template, but pass sending pull request, please call send_pr=true', 'red'))
+        else:
+            print(colored(workflow_dict[rosdistro] + ' is matched to the template', 'green'))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
     parser.add_argument('token', help='token of the github')
     parser.add_argument('yaml_path', help='path to the packages.yaml file')
+    parser.add_argument('send_pr', help='sending pull request or not', type=bool)
     args = parser.parse_args()
-    check_ros_packages(args.token, args.yaml_path)
+    check_ros_packages(args.token, args.yaml_path, args.send_pr)

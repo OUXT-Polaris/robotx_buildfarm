@@ -7,9 +7,11 @@ import argparse
 import datetime
 from pytz import timezone, utc
 from tzlocal import get_localzone
+from termcolor import colored
 
-def report(token, yaml_path):
-    check_ros_packages(token, yaml_path)
+def report(token, yaml_path, send_pr):
+    print(colored('start generating report', 'green'))
+    check_ros_packages(token, yaml_path, send_pr)
     f = open('docs/report.md', 'w')
     f.write("# Reports  \n")
     ja = timezone('Asia/Tokyo')
@@ -25,7 +27,8 @@ def report(token, yaml_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
-    parser.add_argument('token', help='token of the github')
-    parser.add_argument('yaml_path', help='path to the packages.yaml file')
+    parser.add_argument('token', help='token of the github',type=str)
+    parser.add_argument('yaml_path', help='path to the packages.yaml file', type=str)
+    parser.add_argument('send_pr', help='sending pull request or not', type=bool)
     args = parser.parse_args()
-    report(args.token, args.yaml_path)
+    report(args.token, args.yaml_path,args.send_pr)
