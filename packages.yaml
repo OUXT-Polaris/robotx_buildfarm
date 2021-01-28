@@ -56,6 +56,9 @@ ros:
     joy_to_twist:
       rosdistro:
         - foxy
+    message_synchronizer:
+      rosdistro:
+        - foxy
 others:
   OUXT-Polaris:
     robotx_setup:
