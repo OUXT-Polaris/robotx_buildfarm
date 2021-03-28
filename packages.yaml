@@ -57,6 +57,9 @@ ros:
       rosdistro:
         - foxy
     message_synchronizer:
+    ouxt_behavior_descriptor_v1:
+      rosdistro:
+        - foxy
 others:
   OUXT-Polaris:
     robotx_setup:
