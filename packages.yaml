@@ -63,6 +63,7 @@ ros:
     miniv_control:
       rosdistro:
         - foxy
+    tcp_sender:
 others:
   OUXT-Polaris:
     robotx_setup:
