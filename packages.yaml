@@ -61,6 +61,8 @@ ros:
       rosdistro:
         - foxy
     miniv_control:
+      rosdistro:
+        - foxy
 others:
   OUXT-Polaris:
     robotx_setup:
