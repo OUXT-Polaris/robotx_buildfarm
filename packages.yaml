@@ -60,6 +60,7 @@ ros:
     ouxt_behavior_descriptor_v1:
       rosdistro:
         - foxy
+    miniv_control:
 others:
   OUXT-Polaris:
     robotx_setup:
