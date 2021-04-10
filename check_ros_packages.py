@@ -34,6 +34,8 @@ def check_ros_packages(token, yaml_path, send_pr):
                         check_ci_template(package, platfrom, user, repo, token, commit_target, send_pr)
                     else:
                         print(colored('branch ' + commit_target +  ' already exists, pass cheking CI template', 'yellow'))
+                if config["ros"][user][package] != None and "doc" in config["ros"][user][package]:
+                    check_doc_workflow(package, user, repo, token, send_pr)
                 i = i + 1
 
 def check_ci_template(package, rosdistro, user, repo, token, branch, send_pr):
@@ -83,6 +85,9 @@ def check_ci_template(package, rosdistro, user, repo, token, branch, send_pr):
                 print(colored(workflow_dict[rosdistro] + 'is defferent from template, but pass sending pull request, please call send_pr=true', 'red'))
         else:
             print(colored(workflow_dict[rosdistro] + ' is matched to the template', 'green'))
+
+def check_doc_workflow(package, user, repo, token, send_pr):
+    print("test")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='scripts for getting issues')
