@@ -64,6 +64,7 @@ ros:
       rosdistro:
         - foxy
     tcp_sender:
+      doc:
 others:
   OUXT-Polaris:
     robotx_setup:
