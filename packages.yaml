@@ -63,6 +63,9 @@ ros:
     miniv_control:
       rosdistro:
         - foxy
+    miniv_description:
+      rosdistro:
+        - foxy
     tcp_sender:
 others:
   OUXT-Polaris:
