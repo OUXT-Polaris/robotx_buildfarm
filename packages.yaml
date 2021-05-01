@@ -66,6 +66,9 @@ ros:
     miniv_description:
       rosdistro:
         - foxy
+    dynamixel_hardware_interface:
+      rosdistro:
+        - foxy
     tcp_sender:
 others:
   OUXT-Polaris:
