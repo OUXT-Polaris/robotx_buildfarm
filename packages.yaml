@@ -70,6 +70,9 @@ ros:
       rosdistro:
         - foxy
     tcp_sender:
+    usv_controller:
+      rosdistro:
+        - foxy
 others:
   OUXT-Polaris:
     robotx_setup:
